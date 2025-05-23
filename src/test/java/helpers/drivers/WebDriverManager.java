@@ -12,17 +12,18 @@ import java.time.Duration;
 import java.util.Objects;
 
 public class WebDriverManager {
-    protected WebDriver driver;
+    protected static WebDriver driver;
 
     public WebDriverManager(){
-        driver = initializeDriver();
+        initializeDriver();
     }
 
-    private WebDriver initializeDriver() {
-        //System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver/linux/chromedriver");
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver/windows/chromedriver.exe");
-        driver = new ChromeDriver();
-        return driver;
+    private void initializeDriver() {
+        if(driver == null) {
+            //System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver/linux/chromedriver");
+            System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver/windows/chromedriver.exe");
+            driver = new ChromeDriver();
+        }
     }
 
     /**
@@ -31,6 +32,7 @@ public class WebDriverManager {
      * @param url URL страницы для загрузки.
      */
     protected void loadPage(String url) {
+        if(driver == null ) initializeDriver();
         driver.get(url);
 
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(
@@ -55,9 +57,10 @@ public class WebDriverManager {
         }
     }
 
-    public void closeDriver(){
+    public static void closeDriver(){
         if (driver != null) {
             driver.quit();
+            driver = null;
         }
     }
 }
