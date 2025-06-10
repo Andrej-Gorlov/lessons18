@@ -47,7 +47,7 @@
 
 1. Клонируйте репозиторий:
    ```bash
-   git https://github.com/Andrej-Gorlov/lessons18.git
+   git clone https://github.com/Andrej-Gorlov/lessons18.git
    cd your-repo-directory
 2. Соберите проект:
    ```bash
